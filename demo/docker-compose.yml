@@ -1,0 +1,15 @@
+services:
+  database:
+    image: postgres:14.1-alpine
+    restart: always
+    environment:
+      - POSTGRES_DB=student
+      - POSTGRES_USER=uniblog
+      - POSTGRES_PASSWORD=uniblog2022
+    ports:
+      - '5432:5432'
+    volumes:
+      - database:/var/lib/postgresql/data
+volumes:
+  database:
+    driver: local
