@@ -22,14 +22,14 @@ public class StudentService {
     }
 
     public void addNewStudent(Student student) {
-        Optional<Student> studentOptional = studentRepository.findStudentByEmail(student.getEmail());
-        if (studentOptional.isPresent()){
+        Boolean existEmail = studentRepository.selectExistsEmail(student.getEmail());
+        if (existEmail){
             throw new IllegalStateException("email taken");
         }
         studentRepository.save(student);
     }
 
-    public void deleteStudent(Long studentId) {
+    public void deleteStudent(String studentId) {
         boolean exists = studentRepository.existsById(studentId);
         if (!exists){
             throw new IllegalStateException("student with id " + studentId + " does not exist");
@@ -38,7 +38,7 @@ public class StudentService {
     }
 
     @Transactional
-    public void updateStudent(Long studentId, String name, String email) {
+    public void updateStudent(String studentId, String name, String email) {
         Optional<Student> studentOptional = studentRepository.findById(studentId);
         if (studentOptional.isEmpty()){
             throw new IllegalStateException("student with id " + studentId + " does not exist");
