@@ -69,6 +69,10 @@ class StudentServiceTest {
     void canDeleteStudent() {
         //given
         Student student = new Student( "Jamila", "Jamila@gmail.com", LocalDate.of(2000, Month.JANUARY, 5));
+        given(studentRepository.save(student)).
+                willReturn(
+                        new Student("testID", "Jamila", "Jamila@gmail.com", LocalDate.of(2000, Month.JANUARY, 5))
+                );
         student = underTest.addNewStudent(student);
         //when
         underTest.deleteStudent(student.getId());
