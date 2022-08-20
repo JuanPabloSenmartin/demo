@@ -9,6 +9,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.time.LocalDate;
 import java.time.Month;
+import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
@@ -67,8 +68,8 @@ class StudentServiceTest {
     @Test
     void canDeleteStudent() {
         //given
-        Student student = new Student("Jamila", "Jamila@gmail.com", LocalDate.of(2000, Month.JANUARY, 5));
-        underTest.addNewStudent(student);
+        Student student = new Student( "Jamila", "Jamila@gmail.com", LocalDate.of(2000, Month.JANUARY, 5));
+        student = underTest.addNewStudent(student);
         //when
         underTest.deleteStudent(student.getId());
         //then

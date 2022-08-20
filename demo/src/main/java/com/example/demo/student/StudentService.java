@@ -21,12 +21,13 @@ public class StudentService {
         return studentRepository.findAll();
     }
 
-    public void addNewStudent(Student student) {
+    public Student addNewStudent(Student student) {
         Boolean existEmail = studentRepository.selectExistsEmail(student.getEmail());
         if (existEmail){
             throw new IllegalStateException("email taken");
         }
-        studentRepository.save(student);
+        Student std = studentRepository.save(student);
+        return std;
     }
 
     public void deleteStudent(String studentId) {
