@@ -22,11 +22,6 @@ class StudentRepositoryTest {
         underTest.deleteAll();
     }
 
-    @BeforeEach
-    void setUp() {
-
-    }
-
     @Test
     void itShouldCheckWhenStudentEmailExists() {
         //given

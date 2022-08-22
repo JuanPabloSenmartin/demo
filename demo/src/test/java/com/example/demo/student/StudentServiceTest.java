@@ -68,18 +68,16 @@ class StudentServiceTest {
     @Test
     void canDeleteStudent() {
         //given
-        Student student = new Student( "Jamila", "Jamila@gmail.com", LocalDate.of(2000, Month.JANUARY, 5));
-        given(studentRepository.save(student)).
-                willReturn(
-                        new Student("testID", "Jamila", "Jamila@gmail.com", LocalDate.of(2000, Month.JANUARY, 5))
-                );
-        student = underTest.addNewStudent(student);
+        String studentId = "test id";
+        given(studentRepository.existsById(studentId)).willReturn(false);
+
         //when
-        underTest.deleteStudent(student.getId());
         //then
-        ArgumentCaptor<String> studentIdArgumentCaptor = ArgumentCaptor.forClass(String.class);
-        verify(studentRepository).deleteById(studentIdArgumentCaptor.capture());
-        String capturedStudentId = studentIdArgumentCaptor.getValue();
-        assertThat(capturedStudentId).isEqualTo(student.getId());
+
+        assertThatThrownBy(() -> underTest.deleteStudent(studentId))
+                .isInstanceOf(IllegalStateException.class)
+                .hasMessageContaining("student does not exist");
+
+        verify(studentRepository, never()).deleteById(studentId);
     }
 }
